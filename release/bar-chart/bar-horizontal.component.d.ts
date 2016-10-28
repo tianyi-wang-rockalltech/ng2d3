@@ -12,6 +12,9 @@ export declare class BarHorizontal extends BaseChart implements OnChanges, OnDes
     transform: string;
     colors: Function;
     margin: number[];
+    lines: any[];
+    extraResults: any;
+    maxVal: any;
     view: any;
     results: any;
     scheme: any;
@@ -31,9 +34,10 @@ export declare class BarHorizontal extends BaseChart implements OnChanges, OnDes
     ngOnDestroy(): void;
     ngOnChanges(): void;
     update(): void;
+    getExtraResultsDim(): void;
     getXScale(): any;
     getYScale(): any;
-    getXDomain(): number[];
+    getXDomain(): any[];
     getYDomain(): any;
     yAxisTickFormatting(): any;
     click(data: any): void;

@@ -8825,6 +8825,7 @@ var BarHorizontal = (function (_super) {
         _super.call(this, element, zone);
         this.element = element;
         this.margin = [10, 20, 70, 100];
+        this.lines = [];
         this.legend = false;
         this.showGridLines = true;
         this.clickHandler = new core_1.EventEmitter();
@@ -8844,7 +8845,21 @@ var BarHorizontal = (function (_super) {
         this.xScale = this.getXScale();
         this.yScale = this.getYScale();
         this.setColors();
+        this.getExtraResultsDim();
         this.transform = "translate(" + this.dims.xOffset + " , " + this.margin[0] + ")";
+    };
+    BarHorizontal.prototype.getExtraResultsDim = function () {
+        var _this = this;
+        this.lines = this.extraResults.map(function (val) {
+            var x = (val / _this.maxVal) * _this.dims.width;
+            return {
+                x1: x,
+                y1: 0,
+                x2: x,
+                y2: _this.dims.height + 100
+            };
+        });
+        console.log(this.lines);
     };
     BarHorizontal.prototype.getXScale = function () {
         this.xDomain = this.getXDomain();
@@ -8863,7 +8878,13 @@ var BarHorizontal = (function (_super) {
     BarHorizontal.prototype.getXDomain = function () {
         var values = this.results.map(function (d) { return d.value; });
         var min = Math.min.apply(Math, [0].concat(values));
-        var max = Math.max.apply(Math, values);
+        var max;
+        if (this.maxVal) {
+            max = this.maxVal;
+        }
+        else {
+            this.maxVal = max = Math.max.apply(Math, values);
+        }
         return [min, max];
     };
     BarHorizontal.prototype.getYDomain = function () {
@@ -8882,6 +8903,14 @@ var BarHorizontal = (function (_super) {
     BarHorizontal.prototype.setColors = function () {
         this.colors = color_sets_1.colorHelper(this.scheme, 'ordinal', this.yDomain, this.customColors);
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], BarHorizontal.prototype, "extraResults", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], BarHorizontal.prototype, "maxVal", void 0);
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
@@ -8941,7 +8970,7 @@ var BarHorizontal = (function (_super) {
     BarHorizontal = __decorate([
         core_1.Component({
             selector: 'bar-horizontal',
-            template: "\n    <chart\n      [legend]=\"legend\"\n      [view]=\"[width, height]\"\n      [colors]=\"colors\"\n      [legendData]=\"yDomain\">\n      <svg:g [attr.transform]=\"transform\" class=\"bar-chart chart\">\n        <svg:g xAxis\n          *ngIf=\"xAxis\"\n          [xScale]=\"xScale\"\n          [dims]=\"dims\"\n          [showGridLines]=\"showGridLines\"\n          [showLabel]=\"showXAxisLabel\"\n          [labelText]=\"xAxisLabel\">\n        </svg:g>\n\n        <svg:g yAxis\n          *ngIf=\"yAxis\"\n          [yScale]=\"yScale\"\n          [dims]=\"dims\"\n          [tickFormatting]=\"yAxisTickFormatting()\"\n          [showLabel]=\"showYAxisLabel\"\n          [labelText]=\"yAxisLabel\">\n        </svg:g>\n\n        <svg:g seriesHorizontal\n          [xScale]=\"xScale\"\n          [yScale]=\"yScale\"\n          [colors]=\"colors\"\n          [series]=\"results\"\n          [dims]=\"dims\"\n          [gradient]=\"gradient\"\n          (clickHandler)=\"click($event)\"\n        />\n <line stroke-dasharray=\"5, 5\"              x1=\"486\" y1=\"0\" x2=\"486\" y2=\"836\" stroke=\"blue\"/>\n<text x=\"170\" y=\"200\">Hello World!</text>\n\n      </svg:g>\n    </chart>\n  "
+            template: "\n<chart\n[legend]=\"legend\"\n[view]=\"[width, height]\"\n[colors]=\"colors\"\n[legendData]=\"yDomain\">\n<svg:g [attr.transform]=\"transform\" class=\"bar-chart chart\">\n<svg:g xAxis\n*ngIf=\"xAxis\"\n[xScale]=\"xScale\"\n[dims]=\"dims\"\n[showGridLines]=\"showGridLines\"\n[showLabel]=\"showXAxisLabel\"\n[labelText]=\"xAxisLabel\">\n</svg:g>\n\n<svg:g yAxis\n*ngIf=\"yAxis\"\n[yScale]=\"yScale\"\n[dims]=\"dims\"\n[tickFormatting]=\"yAxisTickFormatting()\"\n[showLabel]=\"showYAxisLabel\"\n[labelText]=\"yAxisLabel\">\n</svg:g>\n\n<svg:g seriesHorizontal\n[xScale]=\"xScale\"\n[yScale]=\"yScale\"\n[colors]=\"colors\"\n[series]=\"results\"\n[dims]=\"dims\"\n[gradient]=\"gradient\"\n(clickHandler)=\"click($event)\"\n/>\n\n<line *ngFor=\"let line of lines; trackBy:trackBy\"\n[attr.x1]=\"line.x1\" [attr.y1]=\"line.y1\" [attr.x2]=\"line.x2\" [attr.y2]=\"line.y2\" stroke=\"#FF8C30\" stroke-dasharray=\"5, 5\" />\n\n</svg:g>\n</chart>\n"
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.NgZone])
     ], BarHorizontal);

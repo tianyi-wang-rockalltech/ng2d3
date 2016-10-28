@@ -27,9 +27,11 @@ import './demo.scss';
           </bar-vertical>
           <bar-horizontal
             *ngIf="chartType === 'bar-horizontal'"
+            [maxVal]="maxVal"
             [view]="view"
             [scheme]="colorScheme"
             [results]="single"
+            [extraResults]="[5000000, 6000000]"
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"

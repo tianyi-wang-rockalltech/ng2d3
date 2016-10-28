@@ -18,45 +18,46 @@ import d3 from '../d3';
 @Component({
   selector: 'bar-horizontal',
   template: `
-    <chart
-      [legend]="legend"
-      [view]="[width, height]"
-      [colors]="colors"
-      [legendData]="yDomain">
-      <svg:g [attr.transform]="transform" class="bar-chart chart">
-        <svg:g xAxis
-          *ngIf="xAxis"
-          [xScale]="xScale"
-          [dims]="dims"
-          [showGridLines]="showGridLines"
-          [showLabel]="showXAxisLabel"
-          [labelText]="xAxisLabel">
-        </svg:g>
+<chart
+[legend]="legend"
+[view]="[width, height]"
+[colors]="colors"
+[legendData]="yDomain">
+<svg:g [attr.transform]="transform" class="bar-chart chart">
+<svg:g xAxis
+*ngIf="xAxis"
+[xScale]="xScale"
+[dims]="dims"
+[showGridLines]="showGridLines"
+[showLabel]="showXAxisLabel"
+[labelText]="xAxisLabel">
+</svg:g>
 
-        <svg:g yAxis
-          *ngIf="yAxis"
-          [yScale]="yScale"
-          [dims]="dims"
-          [tickFormatting]="yAxisTickFormatting()"
-          [showLabel]="showYAxisLabel"
-          [labelText]="yAxisLabel">
-        </svg:g>
+<svg:g yAxis
+*ngIf="yAxis"
+[yScale]="yScale"
+[dims]="dims"
+[tickFormatting]="yAxisTickFormatting()"
+[showLabel]="showYAxisLabel"
+[labelText]="yAxisLabel">
+</svg:g>
 
-        <svg:g seriesHorizontal
-          [xScale]="xScale"
-          [yScale]="yScale"
-          [colors]="colors"
-          [series]="results"
-          [dims]="dims"
-          [gradient]="gradient"
-          (clickHandler)="click($event)"
-        />
- <line stroke-dasharray="5, 5"              x1="486" y1="0" x2="486" y2="836" stroke="blue"/>
-<text x="170" y="200">Hello World!</text>
+<svg:g seriesHorizontal
+[xScale]="xScale"
+[yScale]="yScale"
+[colors]="colors"
+[series]="results"
+[dims]="dims"
+[gradient]="gradient"
+(clickHandler)="click($event)"
+/>
 
-      </svg:g>
-    </chart>
-  `
+<line *ngFor="let line of lines; trackBy:trackBy"
+[attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2" stroke="#FF8C30" stroke-dasharray="5, 5" />
+
+</svg:g>
+</chart>
+`
 })
 export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, AfterViewInit {
   dims: ViewDimensions;
@@ -67,7 +68,10 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
   transform: string;
   colors: Function;
   margin = [10, 20, 70, 100];
+  lines = [];
 
+  @Input() extraResults;
+  @Input() maxVal;
   @Input() view;
   @Input() results;
   @Input() scheme;
@@ -108,10 +112,23 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
     this.yScale = this.getYScale();
 
     this.setColors();
-
+    this.getExtraResultsDim();
     this.transform = `translate(${ this.dims.xOffset } , ${ this.margin[0] })`;
   }
 
+  getExtraResultsDim() {
+    this.lines = this.extraResults.map((val) => {
+      let x = (val / this.maxVal) * this.dims.width;
+
+      return {
+        x1: x,
+        y1: 0,
+        x2: x,
+        y2: this.dims.height + 100
+      };
+    });
+    console.log(this.lines); 
+  }
   getXScale() {
     this.xDomain = this.getXDomain();
     return d3.scaleLinear()
@@ -131,7 +148,12 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
   getXDomain() {
     let values = this.results.map(d => d.value);
     let min = Math.min(0, ...values);
-    let max = Math.max(...values);
+    let max;
+    if (this.maxVal) {
+      max = this.maxVal;
+    } else {
+      this.maxVal = max = Math.max(...values);
+    }
     return [min, max];
   }
 
