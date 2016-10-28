@@ -53,8 +53,13 @@ import d3 from '../d3';
 />
 
 <line *ngFor="let line of lines; trackBy:trackBy"
-[attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2" stroke="#FF8C30" stroke-dasharray="5, 5" />
+[attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2" [attr.stroke]="line.color" stroke-dasharray="5, 5" />
 
+<text *ngFor="let line of lines; trackBy:trackBy"
+font-size="13" [attr.x]="line.x2 - 50" [attr.y]="line.y2 + 10" [attr.fill]="line.color"
+>
+{{ line.label }}
+</text>
 </svg:g>
 </chart>
 `
@@ -117,17 +122,21 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
   }
 
   getExtraResultsDim() {
-    this.lines = this.extraResults.map((val) => {
+    this.lines = this.extraResults.map((value) => {
+      let label = value.label;
+      let val = value.val;
+      let color = value.color;
       let x = (val / this.maxVal) * this.dims.width;
-
       return {
         x1: x,
         y1: 0,
         x2: x,
-        y2: this.dims.height + 100
+        y2: this.dims.height + 60,
+        color: color,
+        label: `${label} ${val}`
       };
     });
-    console.log(this.lines); 
+    console.log(this.lines);
   }
   getXScale() {
     this.xDomain = this.getXDomain();

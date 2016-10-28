@@ -31,7 +31,7 @@ import './demo.scss';
             [view]="view"
             [scheme]="colorScheme"
             [results]="single"
-            [extraResults]="[5000000, 6000000]"
+            [extraResults]="[{label: 'bla', color: 'red', val: 5000000}, {label: 'bla', color: 'blue', val: 6000000}]"
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
