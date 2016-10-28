@@ -56,7 +56,7 @@ import d3 from '../d3';
 [attr.x1]="line.x1"
 [attr.y1]="line.y1"
 [attr.x2]="line.x2"
-[attr.y2]="line.y2 + i * 30"
+[attr.y2]="line.y2 + i * 40"
 [attr.stroke]="line.color" stroke-dasharray="5, 5" />
 
 <text *ngFor="let line of lines; let i=index; trackBy:trackBy"
