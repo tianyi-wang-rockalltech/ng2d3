@@ -52,11 +52,17 @@ import d3 from '../d3';
 (clickHandler)="click($event)"
 />
 
-<line *ngFor="let line of lines; trackBy:trackBy"
-[attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2" [attr.y2]="line.y2" [attr.stroke]="line.color" stroke-dasharray="5, 5" />
+<line *ngFor="let line of lines; let i=index; trackBy:trackBy"
+[attr.x1]="line.x1"
+[attr.y1]="line.y1"
+[attr.x2]="line.x2"
+[attr.y2]="line.y2 + i * 30"
+[attr.stroke]="line.color" stroke-dasharray="5, 5" />
 
 <text *ngFor="let line of lines; let i=index; trackBy:trackBy"
-font-weight="bold" font-size="13" [attr.x]="line.x2 - 150" [attr.y]="line.y2 + i * 15" [attr.fill]="line.color"
+font-weight="bold" font-size="13"
+[attr.x]="line.x2 - 150" [attr.y]="line.y2 + i * 15"
+[attr.fill]="line.color"
 >
 {{ line.label }}
 </text>
@@ -131,7 +137,7 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
         x1: x,
         y1: 0,
         x2: x,
-        y2: this.dims.height + 60,
+        y2: this.dims.height,
         color: color,
         label: `${label}`
       };
