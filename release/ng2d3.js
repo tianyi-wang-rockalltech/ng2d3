@@ -8861,7 +8861,7 @@ var BarHorizontal = (function (_super) {
                 x2: x,
                 y2: _this.dims.height + 60,
                 color: color,
-                label: label + " " + val
+                label: "" + label
             };
         });
         console.log(this.lines);
@@ -8975,7 +8975,7 @@ var BarHorizontal = (function (_super) {
     BarHorizontal = __decorate([
         core_1.Component({
             selector: 'bar-horizontal',
-            template: "\n<chart\n[legend]=\"legend\"\n[view]=\"[width, height]\"\n[colors]=\"colors\"\n[legendData]=\"yDomain\">\n<svg:g [attr.transform]=\"transform\" class=\"bar-chart chart\">\n<svg:g xAxis\n*ngIf=\"xAxis\"\n[xScale]=\"xScale\"\n[dims]=\"dims\"\n[showGridLines]=\"showGridLines\"\n[showLabel]=\"showXAxisLabel\"\n[labelText]=\"xAxisLabel\">\n</svg:g>\n\n<svg:g yAxis\n*ngIf=\"yAxis\"\n[yScale]=\"yScale\"\n[dims]=\"dims\"\n[tickFormatting]=\"yAxisTickFormatting()\"\n[showLabel]=\"showYAxisLabel\"\n[labelText]=\"yAxisLabel\">\n</svg:g>\n\n<svg:g seriesHorizontal\n[xScale]=\"xScale\"\n[yScale]=\"yScale\"\n[colors]=\"colors\"\n[series]=\"results\"\n[dims]=\"dims\"\n[gradient]=\"gradient\"\n(clickHandler)=\"click($event)\"\n/>\n\n<line *ngFor=\"let line of lines; trackBy:trackBy\"\n[attr.x1]=\"line.x1\" [attr.y1]=\"line.y1\" [attr.x2]=\"line.x2\" [attr.y2]=\"line.y2\" [attr.stroke]=\"line.color\" stroke-dasharray=\"5, 5\" />\n\n<text *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\nfont-size=\"13\" [attr.x]=\"line.x2 - 50\" [attr.y]=\"line.y2 + i * 10\" [attr.fill]=\"line.color\"\n>\n{{ line.label }}\n</text>\n</svg:g>\n</chart>\n"
+            template: "\n<chart\n[legend]=\"legend\"\n[view]=\"[width, height]\"\n[colors]=\"colors\"\n[legendData]=\"yDomain\">\n<svg:g [attr.transform]=\"transform\" class=\"bar-chart chart\">\n<svg:g xAxis\n*ngIf=\"xAxis\"\n[xScale]=\"xScale\"\n[dims]=\"dims\"\n[showGridLines]=\"showGridLines\"\n[showLabel]=\"showXAxisLabel\"\n[labelText]=\"xAxisLabel\">\n</svg:g>\n\n<svg:g yAxis\n*ngIf=\"yAxis\"\n[yScale]=\"yScale\"\n[dims]=\"dims\"\n[tickFormatting]=\"yAxisTickFormatting()\"\n[showLabel]=\"showYAxisLabel\"\n[labelText]=\"yAxisLabel\">\n</svg:g>\n\n<svg:g seriesHorizontal\n[xScale]=\"xScale\"\n[yScale]=\"yScale\"\n[colors]=\"colors\"\n[series]=\"results\"\n[dims]=\"dims\"\n[gradient]=\"gradient\"\n(clickHandler)=\"click($event)\"\n/>\n\n<line *ngFor=\"let line of lines; trackBy:trackBy\"\n[attr.x1]=\"line.x1\" [attr.y1]=\"line.y1\" [attr.x2]=\"line.x2\" [attr.y2]=\"line.y2\" [attr.stroke]=\"line.color\" stroke-dasharray=\"5, 5\" />\n\n<text *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\nfont-size=\"13\" [attr.x]=\"line.x2 - 150\" [attr.y]=\"line.y2 + i * 15\" [attr.fill]=\"line.color\"\n>\n{{ line.label }}\n</text>\n</svg:g>\n</chart>\n"
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.NgZone])
     ], BarHorizontal);
