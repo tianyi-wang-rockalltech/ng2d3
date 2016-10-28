@@ -51,6 +51,9 @@ import d3 from '../d3';
           [gradient]="gradient"
           (clickHandler)="click($event)"
         />
+ <line stroke-dasharray="5, 5"              x1="486" y1="0" x2="486" y2="836" stroke="blue"/>
+<text x="170" y="200">Hello World!</text>
+
       </svg:g>
     </chart>
   `
