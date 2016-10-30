@@ -59,7 +59,8 @@ import d3 from '../d3';
 [attr.y2]="line.y2 + 50 + i * 20"
 [attr.stroke]="line.color" stroke-dasharray="5, 5" />
 
-<text x="0" y="0" font-size="13" font-weight="bold" [attr.fill]="colors[0]">{{ mainLabel }}</text>
+<text x="0" y="0" font-size="13" font-weight="bold" [attr.fill]="mainLabel.color">{{ mainLabel.label }}</text>
+
 <text *ngFor="let line of lines; let i=index; trackBy:trackBy"
 font-weight="bold" font-size="13"
 [attr.x]="line.x2 - 150" [attr.y]="line.y2 + 60 + i * 20"
@@ -130,6 +131,7 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
   }
 
   getExtraResultsDim() {
+    this.mainLabel = this.mainLabel ? this.mainLabel : {label: '', color: 'black'};
     this.lines = this.extraResults.map((value) => {
       let label = value.label;
       let val = value.val;

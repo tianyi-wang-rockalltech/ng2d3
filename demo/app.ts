@@ -32,6 +32,7 @@ import './demo.scss';
             [scheme]="colorScheme"
             [results]="single"
             [extraResults]="[{label: 'topup 123131312312321', color: 'red', val: 5000000}, {label: 'bla', color: 'blue', val: 6000000}]"
+            [mainLabel]="{label: 'text', color: 'pink'}"
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
