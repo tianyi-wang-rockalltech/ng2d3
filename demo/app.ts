@@ -9,22 +9,6 @@ import './demo.scss';
   template: `
     <main>
       <div class="chart-col">
-          <bar-vertical
-            *ngIf="chartType === 'bar-vertical'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="single"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </bar-vertical>
           <bar-horizontal
             *ngIf="chartType === 'bar-horizontal'"
             [maxVal]="maxVal"
@@ -44,59 +28,14 @@ import './demo.scss';
             [showGridLines]="showGridLines"
             (clickHandler)="clickHandler($event)">
           </bar-horizontal>
-          <bar-vertical-2d
-            *ngIf="chartType === 'bar-vertical-2d'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="multi"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </bar-vertical-2d>
-          <bar-horizontal-2d
-            *ngIf="chartType === 'bar-horizontal-2d'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="multi"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </bar-horizontal-2d>
-          <bar-vertical-stacked
-            *ngIf="chartType === 'bar-vertical-stacked'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="multi"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </bar-vertical-stacked>
           <bar-horizontal-stacked
             *ngIf="chartType === 'bar-horizontal-stacked'"
             [view]="view"
+            [maxVal]="maxVal"
             [scheme]="colorScheme"
             [results]="multi"
+      [extraResults]="[{label: 'topup 123131312312321', color: 'red', val: 5000000}, {label: 'bla', color: 'blue', val: 6000000}]"
+            [mainLabel]="{label: 'text', color: 'pink'}"
             [gradient]="gradient"
             [xAxis]="showXAxis"
             [yAxis]="showYAxis"
@@ -108,175 +47,7 @@ import './demo.scss';
             [showGridLines]="showGridLines"
             (clickHandler)="clickHandler($event)">
           </bar-horizontal-stacked>
-          <bar-vertical-normalized
-            *ngIf="chartType === 'bar-vertical-normalized'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="multi"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </bar-vertical-normalized>
-          <bar-horizontal-normalized
-            *ngIf="chartType === 'bar-horizontal-normalized'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="multi"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [legend]="showLegend"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </bar-horizontal-normalized>
-          <pie-chart
-            *ngIf="chartType === 'pie-chart'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="single"
-            [legend]="showLegend"
-            [explodeSlices]="explodeSlices"
-            [labels]="showLabels"
-            [doughnut]="doughnut"
-            [gradient]="gradient"
-            (clickHandler)="clickHandler($event)">
-          </pie-chart>
-          <advanced-pie-chart
-            *ngIf="chartType === 'advanced-pie-chart'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="single"
-            [gradient]="gradient"
-            (clickHandler)="clickHandler($event)">
-          </advanced-pie-chart>
-          <pie-grid
-            *ngIf="chartType === 'pie-grid'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="single"
-            (clickHandler)="clickHandler($event)">
-          </pie-grid>
-          <line-chart
-            *ngIf="chartType === 'line-chart'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="dateData"
-            [legend]="showLegend"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [autoScale]="autoScale"
-            [timeline]="timeline"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </line-chart>
 
-          <force-directed-graph
-            *ngIf="chartType === 'force-directed-graph'"
-            [legend]="showLegend"
-            [links]="graph.links"
-            [nodes]="graph.nodes"
-            [scheme]="colorScheme"
-            [view]="view"
-            (clickHandler)="clickHandler($event)">
-          </force-directed-graph>
-
-          <area-chart
-            *ngIf="chartType === 'area-chart'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="dateData"
-            [legend]="showLegend"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [autoScale]="autoScale"
-            [timeline]="timeline"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </area-chart>
-          <area-chart-stacked
-            *ngIf="chartType === 'area-chart-stacked'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="dateData"
-            [legend]="showLegend"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [timeline]="timeline"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </area-chart-stacked>
-          <area-chart-normalized
-            *ngIf="chartType === 'area-chart-normalized'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="dateData"
-            [legend]="showLegend"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            [timeline]="timeline"
-            [showGridLines]="showGridLines"
-            (clickHandler)="clickHandler($event)">
-          </area-chart-normalized>
-          <heat-map
-            *ngIf="chartType === 'heat-map'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="multi"
-            [legend]="showLegend"
-            [gradient]="gradient"
-            [xAxis]="showXAxis"
-            [yAxis]="showYAxis"
-            [showXAxisLabel]="showXAxisLabel"
-            [showYAxisLabel]="showYAxisLabel"
-            [xAxisLabel]="xAxisLabel"
-            [yAxisLabel]="yAxisLabel"
-            (clickHandler)="clickHandler($event)">
-          </heat-map>
-          <tree-map
-            *ngIf="chartType === 'tree-map'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="single"
-            (clickHandler)="clickHandler($event)">
-          </tree-map>
-          <number-card
-            *ngIf="chartType === 'number-card'"
-            [view]="view"
-            [scheme]="colorScheme"
-            [results]="single"
-            (clickHandler)="clickHandler($event)">
-          </number-card>
       </div>
       <div class="sidebar">
         <h1>

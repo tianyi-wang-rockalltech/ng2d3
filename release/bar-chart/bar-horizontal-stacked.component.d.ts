@@ -13,6 +13,7 @@ export declare class BarHorizontalStacked extends BaseChart implements OnChanges
     transform: string;
     colors: Function;
     margin: number[];
+    lines: any[];
     view: any;
     results: any;
     scheme: any;
@@ -26,15 +27,19 @@ export declare class BarHorizontalStacked extends BaseChart implements OnChanges
     yAxisLabel: any;
     gradient: boolean;
     showGridLines: boolean;
+    extraResults: any;
+    mainLabel: any;
+    maxVal: any;
     clickHandler: EventEmitter<{}>;
     constructor(element: ElementRef, zone: NgZone);
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
     ngOnChanges(): void;
     update(): void;
+    getExtraResultsDim(): void;
     getGroupDomain(): any[];
     getInnerDomain(): any[];
-    getValueDomain(): number[];
+    getValueDomain(): any[];
     getYScale(): any;
     getXScale(): any;
     groupTransform(group: any): string;
