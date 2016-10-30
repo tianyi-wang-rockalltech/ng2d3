@@ -59,6 +59,7 @@ import d3 from '../d3';
 [attr.y2]="line.y2 + 50 + i * 20"
 [attr.stroke]="line.color" stroke-dasharray="5, 5" />
 
+<text x="0" y="0">{{ mainLabel }}</text>
 <text *ngFor="let line of lines; let i=index; trackBy:trackBy"
 font-weight="bold" font-size="13"
 [attr.x]="line.x2 - 150" [attr.y]="line.y2 + 60 + i * 20"
@@ -96,6 +97,7 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
   @Input() yAxisLabel;
   @Input() gradient: boolean;
   @Input() showGridLines: boolean = true;
+  @Input() mainLabel;
 
   @Output() clickHandler = new EventEmitter();
 
