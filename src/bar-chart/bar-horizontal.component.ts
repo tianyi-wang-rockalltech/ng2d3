@@ -59,11 +59,11 @@ import d3 from '../d3';
 [attr.y2]="line.y2 + 50 + i * 20"
 [attr.stroke]="line.color" stroke-dasharray="5, 5" />
 
-<text x="0" y="-5" font-size="13" font-weight="bold" [attr.fill]="mainLabel.color">{{ mainLabel.label }}</text>
+<text x="0" y="-10" font-size="13" font-weight="bold" [attr.fill]="mainLabel.color">{{ mainLabel.label }}</text>
 
 <text *ngFor="let line of lines; let i=index; trackBy:trackBy"
 font-weight="bold" font-size="13"
-[attr.x]="line.x2 - 150" [attr.y]="line.y2 + 60 + i * 20"
+[attr.x]="line.x2 - 150" [attr.y]="line.y2 + 40 + i * 20"
 [attr.fill]="line.color"
 >
 {{ line.label }}
@@ -80,7 +80,7 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
   yDomain: any;
   transform: string;
   colors: Function;
-  margin = [10, 20, 70, 100];
+  margin = [25, 20, 70, 100];
   lines = [];
 
   @Input() extraResults;
@@ -139,7 +139,7 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
       let x = (val / this.maxVal) * this.dims.width;
       return {
         x1: x,
-        y1: 0,
+        y1: -10,
         x2: x,
         y2: this.dims.height,
         color: color,
