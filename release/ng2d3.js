@@ -8685,7 +8685,7 @@ var BarHorizontalStacked = (function (_super) {
             var x = (val / _this.maxVal) * _this.dims.width;
             return {
                 x1: x,
-                y1: -10,
+                y1: -8,
                 x2: x,
                 y2: _this.dims.height,
                 color: color,
@@ -8918,7 +8918,7 @@ var BarHorizontal = (function (_super) {
             var x = (val / _this.maxVal) * _this.dims.width;
             return {
                 x1: x,
-                y1: -10,
+                y1: -8,
                 x2: x,
                 y2: _this.dims.height,
                 color: color,

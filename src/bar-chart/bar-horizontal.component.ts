@@ -139,7 +139,7 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
       let x = (val / this.maxVal) * this.dims.width;
       return {
         x1: x,
-        y1: -10,
+        y1: -8,
         x2: x,
         y2: this.dims.height,
         color: color,
