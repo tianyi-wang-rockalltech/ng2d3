@@ -64,7 +64,7 @@ type="stacked"
 [attr.y2]="line.y2 + 50 + i * 20"
 [attr.stroke]="line.color" stroke-dasharray="5, 5" />
 
-<text *ngFor="let label of labels;"
+<text *ngFor="let label of labels; trackBy:trackBy"
 font-size="13" font-weight="bold"
 [attr.x]="label.x" [attr.y]="label.y"
 [attr.text-anchor]="label.anchor"
