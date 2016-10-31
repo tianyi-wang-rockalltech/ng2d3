@@ -59,7 +59,7 @@ import d3 from '../d3';
 [attr.y2]="line.y2 + 50 + i * 20"
 [attr.stroke]="line.color" stroke-dasharray="5, 5" />
 
-<text x="-5" y="0" font-size="13" font-weight="bold" [attr.fill]="mainLabel.color">{{ mainLabel.label }}</text>
+<text x="0" y="-5" font-size="13" font-weight="bold" [attr.fill]="mainLabel.color">{{ mainLabel.label }}</text>
 
 <text *ngFor="let line of lines; let i=index; trackBy:trackBy"
 font-weight="bold" font-size="13"
