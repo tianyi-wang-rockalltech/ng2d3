@@ -166,7 +166,7 @@ export class BarHorizontalStacked extends BaseChart implements  OnChanges, OnDes
         {
           label: this.mainLabel[0].label,
           color: this.mainLabel[0].color,
-          x: 0, y: 0,
+          x: -5, y: 0,
           anchor: 'start'
         }
       );
