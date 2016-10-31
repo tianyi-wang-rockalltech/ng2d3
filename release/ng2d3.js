@@ -8628,6 +8628,7 @@ var BarHorizontalStacked = (function (_super) {
         this.element = element;
         this.margin = [10, 20, 70, 100];
         this.lines = [];
+        this.labels = [];
         this.legend = false;
         this.showGridLines = true;
         this.clickHandler = new core_1.EventEmitter();
@@ -8649,13 +8650,34 @@ var BarHorizontalStacked = (function (_super) {
         this.valueDomain = this.getValueDomain();
         this.xScale = this.getXScale();
         this.yScale = this.getYScale();
+        this.getLabels();
         this.getExtraResultsDim();
         this.setColors();
         this.transform = "translate(" + this.dims.xOffset + " , " + this.margin[0] + ")";
     };
+    BarHorizontalStacked.prototype.getLabels = function () {
+        if (this.mainLabel) {
+            this.labels.push({
+                label: this.mainLabel[0].label,
+                color: this.mainLabel[0].color,
+                x: 0, y: 0,
+                anchor: 'start'
+            });
+            if (this.mainLabel.length === 2) {
+                this.labels.push({
+                    label: this.mainLabel[1].label,
+                    color: this.mainLabel[1].color,
+                    x: this.dims.width - 5, y: 0,
+                    anchor: 'end'
+                });
+            }
+        }
+        else {
+            this.labels = [{ label: '', color: 'black', x: 0, y: 0 }];
+        }
+    };
     BarHorizontalStacked.prototype.getExtraResultsDim = function () {
         var _this = this;
-        this.mainLabel = this.mainLabel ? this.mainLabel : { label: '', color: 'black' };
         this.lines = this.extraResults.map(function (value) {
             var label = value.label;
             var val = value.val;
@@ -8663,14 +8685,13 @@ var BarHorizontalStacked = (function (_super) {
             var x = (val / _this.maxVal) * _this.dims.width;
             return {
                 x1: x,
-                y1: 0,
+                y1: -10,
                 x2: x,
                 y2: _this.dims.height,
                 color: color,
                 label: "" + label
             };
         });
-        console.log(this.lines);
     };
     BarHorizontalStacked.prototype.getGroupDomain = function () {
         var domain = [];
@@ -8812,7 +8833,7 @@ var BarHorizontalStacked = (function (_super) {
     BarHorizontalStacked = __decorate([
         core_1.Component({
             selector: 'bar-horizontal-stacked',
-            template: "\n    <chart\n      [legend]=\"legend\"\n      [view]=\"[width, height]\"\n      [colors]=\"colors\"\n      [legendData]=\"innerDomain\">\n      <svg:g [attr.transform]=\"transform\" class=\"bar-chart chart\">\n        <svg:g xAxis\n          *ngIf=\"xAxis\"\n          [xScale]=\"xScale\"\n          [dims]=\"dims\"\n          [showGridLines]=\"showGridLines\"\n          [showLabel]=\"showXAxisLabel\"\n          [labelText]=\"xAxisLabel\">\n        </svg:g>\n\n        <svg:g yAxis\n          *ngIf=\"yAxis\"\n          [yScale]=\"yScale\"\n          [dims]=\"dims\"\n          [showLabel]=\"showYAxisLabel\"\n          [labelText]=\"yAxisLabel\">\n        </svg:g>\n\n        <svg:g\n          *ngFor=\"let group of results; trackBy:trackBy\"\n          [@animationState]=\"'active'\"\n          [attr.transform]=\"groupTransform(group)\">\n          <svg:g seriesHorizontal\n            type=\"stacked\"\n            [xScale]=\"xScale\"\n            [yScale]=\"yScale\"\n            [colors]=\"colors\"\n            [series]=\"group.series\"\n            [dims]=\"dims\"\n            [gradient]=\"gradient\"\n            (clickHandler)=\"click($event, group)\"\n          />\n        </svg:g>\n\n<line *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\n[attr.x1]=\"line.x1\"\n[attr.y1]=\"line.y1\"\n[attr.x2]=\"line.x2\"\n[attr.y2]=\"line.y2 + 50 + i * 20\"\n[attr.stroke]=\"line.color\" stroke-dasharray=\"5, 5\" />\n\n<text x=\"0\" y=\"0\" font-size=\"13\" font-weight=\"bold\" [attr.fill]=\"mainLabel.color\">{{ mainLabel.label }}</text>\n\n<text *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\nfont-weight=\"bold\" font-size=\"13\"\n[attr.x]=\"line.x2 - 150\" [attr.y]=\"line.y2 + 60 + i * 20\"\n[attr.fill]=\"line.color\"\n>\n{{ line.label }}\n</text>\n\n      </svg:g>\n    </chart>\n  ",
+            template: "\n<chart\n[legend]=\"legend\"\n[view]=\"[width, height]\"\n[colors]=\"colors\"\n[legendData]=\"innerDomain\">\n<svg:g [attr.transform]=\"transform\" class=\"bar-chart chart\">\n<svg:g xAxis\n*ngIf=\"xAxis\"\n[xScale]=\"xScale\"\n[dims]=\"dims\"\n[showGridLines]=\"showGridLines\"\n[showLabel]=\"showXAxisLabel\"\n[labelText]=\"xAxisLabel\">\n</svg:g>\n\n<svg:g yAxis\n*ngIf=\"yAxis\"\n[yScale]=\"yScale\"\n[dims]=\"dims\"\n[showLabel]=\"showYAxisLabel\"\n[labelText]=\"yAxisLabel\">\n</svg:g>\n\n<svg:g\n*ngFor=\"let group of results; trackBy:trackBy\"\n[@animationState]=\"'active'\"\n[attr.transform]=\"groupTransform(group)\">\n<svg:g seriesHorizontal\ntype=\"stacked\"\n[xScale]=\"xScale\"\n[yScale]=\"yScale\"\n[colors]=\"colors\"\n[series]=\"group.series\"\n[dims]=\"dims\"\n[gradient]=\"gradient\"\n(clickHandler)=\"click($event, group)\"\n/>\n</svg:g>\n\n<line *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\n[attr.x1]=\"line.x1\"\n[attr.y1]=\"line.y1\"\n[attr.x2]=\"line.x2\"\n[attr.y2]=\"line.y2 + 50 + i * 20\"\n[attr.stroke]=\"line.color\" stroke-dasharray=\"5, 5\" />\n\n<text *ngFor=\"let label of labels;\"\nfont-size=\"13\" font-weight=\"bold\"\n[attr.x]=\"label.x\" [attr.y]=\"label.y\"\n[attr.text-anchor]=\"label.anchor\"\n[attr.fill]=\"label.color\">\n{{ label.label }}\n</text>\n\n<text *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\nfont-weight=\"bold\" font-size=\"13\"\n[attr.x]=\"line.x2 - 150\" [attr.y]=\"line.y2 + 60 + i * 20\"\n[attr.fill]=\"line.color\"\n>\n{{ line.label }}\n</text>\n\n</svg:g>\n</chart>\n",
             animations: [
                 core_1.trigger('animationState', [
                     core_1.transition('* => void', [
@@ -8904,7 +8925,6 @@ var BarHorizontal = (function (_super) {
                 label: "" + label
             };
         });
-        console.log(this.lines);
     };
     BarHorizontal.prototype.getXScale = function () {
         this.xDomain = this.getXDomain();

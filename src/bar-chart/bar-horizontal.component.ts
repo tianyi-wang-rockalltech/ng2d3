@@ -146,7 +146,6 @@ export class BarHorizontal extends BaseChart implements OnChanges, OnDestroy, Af
         label: `${label}`
       };
     });
-    console.log(this.lines);
   }
   getXScale() {
     this.xDomain = this.getXDomain();

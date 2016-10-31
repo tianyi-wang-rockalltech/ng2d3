@@ -18,44 +18,44 @@ import d3 from '../d3';
 @Component({
   selector: 'bar-horizontal-stacked',
   template: `
-    <chart
-      [legend]="legend"
-      [view]="[width, height]"
-      [colors]="colors"
-      [legendData]="innerDomain">
-      <svg:g [attr.transform]="transform" class="bar-chart chart">
-        <svg:g xAxis
-          *ngIf="xAxis"
-          [xScale]="xScale"
-          [dims]="dims"
-          [showGridLines]="showGridLines"
-          [showLabel]="showXAxisLabel"
-          [labelText]="xAxisLabel">
-        </svg:g>
+<chart
+[legend]="legend"
+[view]="[width, height]"
+[colors]="colors"
+[legendData]="innerDomain">
+<svg:g [attr.transform]="transform" class="bar-chart chart">
+<svg:g xAxis
+*ngIf="xAxis"
+[xScale]="xScale"
+[dims]="dims"
+[showGridLines]="showGridLines"
+[showLabel]="showXAxisLabel"
+[labelText]="xAxisLabel">
+</svg:g>
 
-        <svg:g yAxis
-          *ngIf="yAxis"
-          [yScale]="yScale"
-          [dims]="dims"
-          [showLabel]="showYAxisLabel"
-          [labelText]="yAxisLabel">
-        </svg:g>
+<svg:g yAxis
+*ngIf="yAxis"
+[yScale]="yScale"
+[dims]="dims"
+[showLabel]="showYAxisLabel"
+[labelText]="yAxisLabel">
+</svg:g>
 
-        <svg:g
-          *ngFor="let group of results; trackBy:trackBy"
-          [@animationState]="'active'"
-          [attr.transform]="groupTransform(group)">
-          <svg:g seriesHorizontal
-            type="stacked"
-            [xScale]="xScale"
-            [yScale]="yScale"
-            [colors]="colors"
-            [series]="group.series"
-            [dims]="dims"
-            [gradient]="gradient"
-            (clickHandler)="click($event, group)"
-          />
-        </svg:g>
+<svg:g
+*ngFor="let group of results; trackBy:trackBy"
+[@animationState]="'active'"
+[attr.transform]="groupTransform(group)">
+<svg:g seriesHorizontal
+type="stacked"
+[xScale]="xScale"
+[yScale]="yScale"
+[colors]="colors"
+[series]="group.series"
+[dims]="dims"
+[gradient]="gradient"
+(clickHandler)="click($event, group)"
+/>
+</svg:g>
 
 <line *ngFor="let line of lines; let i=index; trackBy:trackBy"
 [attr.x1]="line.x1"
@@ -64,7 +64,13 @@ import d3 from '../d3';
 [attr.y2]="line.y2 + 50 + i * 20"
 [attr.stroke]="line.color" stroke-dasharray="5, 5" />
 
-<text x="0" y="0" font-size="13" font-weight="bold" [attr.fill]="mainLabel.color">{{ mainLabel.label }}</text>
+<text *ngFor="let label of labels;"
+font-size="13" font-weight="bold"
+[attr.x]="label.x" [attr.y]="label.y"
+[attr.text-anchor]="label.anchor"
+[attr.fill]="label.color">
+{{ label.label }}
+</text>
 
 <text *ngFor="let line of lines; let i=index; trackBy:trackBy"
 font-weight="bold" font-size="13"
@@ -74,9 +80,9 @@ font-weight="bold" font-size="13"
 {{ line.label }}
 </text>
 
-      </svg:g>
-    </chart>
-  `,
+</svg:g>
+</chart>
+`,
   animations: [
     trigger('animationState', [
       transition('* => void', [
@@ -100,6 +106,7 @@ export class BarHorizontalStacked extends BaseChart implements  OnChanges, OnDes
   colors: Function;
   margin = [10, 20, 70, 100];
   lines = [];
+  labels = [];
 
   @Input() view;
   @Input() results;
@@ -147,13 +154,37 @@ export class BarHorizontalStacked extends BaseChart implements  OnChanges, OnDes
     this.xScale = this.getXScale();
     this.yScale = this.getYScale();
 
+    this.getLabels();
     this.getExtraResultsDim();
     this.setColors();
 
     this.transform = `translate(${ this.dims.xOffset } , ${ this.margin[0] })`;
   }
+  getLabels() {
+    if (this.mainLabel) {
+      this.labels.push(
+        {
+          label: this.mainLabel[0].label,
+          color: this.mainLabel[0].color,
+          x: 0, y: 0,
+          anchor: 'start'
+        }
+      );
+      if (this.mainLabel.length === 2) {
+        this.labels.push(
+          {
+            label: this.mainLabel[1].label,
+            color: this.mainLabel[1].color,
+            x: this.dims.width - 5, y: 0,
+            anchor: 'end'
+          }
+        );
+      }
+    } else {
+      this.labels = [{label: '', color: 'black', x: 0, y: 0}];
+    }
+  }
   getExtraResultsDim() {
-    this.mainLabel = this.mainLabel ? this.mainLabel : {label: '', color: 'black'};
     this.lines = this.extraResults.map((value) => {
       let label = value.label;
       let val = value.val;
@@ -161,14 +192,13 @@ export class BarHorizontalStacked extends BaseChart implements  OnChanges, OnDes
       let x = (val / this.maxVal) * this.dims.width;
       return {
         x1: x,
-        y1: 0,
+        y1: -10,
         x2: x,
         y2: this.dims.height,
         color: color,
         label: `${label}`
       };
     });
-    console.log(this.lines);
   }
 
   getGroupDomain() {

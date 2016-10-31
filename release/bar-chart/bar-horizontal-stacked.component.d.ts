@@ -14,6 +14,7 @@ export declare class BarHorizontalStacked extends BaseChart implements OnChanges
     colors: Function;
     margin: number[];
     lines: any[];
+    labels: any[];
     view: any;
     results: any;
     scheme: any;
@@ -36,6 +37,7 @@ export declare class BarHorizontalStacked extends BaseChart implements OnChanges
     ngOnDestroy(): void;
     ngOnChanges(): void;
     update(): void;
+    getLabels(): void;
     getExtraResultsDim(): void;
     getGroupDomain(): any[];
     getInnerDomain(): any[];
