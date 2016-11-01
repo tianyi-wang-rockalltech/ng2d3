@@ -8660,14 +8660,14 @@ var BarHorizontalStacked = (function (_super) {
             this.labels.push({
                 label: this.mainLabel[0].label,
                 color: this.mainLabel[0].color,
-                x: 0, y: -10,
+                x: 0, y: -8,
                 anchor: 'start'
             });
             if (this.mainLabel.length === 2) {
                 this.labels.push({
                     label: this.mainLabel[1].label,
                     color: this.mainLabel[1].color,
-                    x: this.dims.width - 5, y: -10,
+                    x: this.dims.width - 5, y: -8,
                     anchor: 'end'
                 });
             }
@@ -8685,7 +8685,7 @@ var BarHorizontalStacked = (function (_super) {
             var x = (val / _this.maxVal) * _this.dims.width;
             return {
                 x1: x,
-                y1: -8,
+                y1: -6,
                 x2: x,
                 y2: _this.dims.height,
                 color: color,
@@ -8918,7 +8918,7 @@ var BarHorizontal = (function (_super) {
             var x = (val / _this.maxVal) * _this.dims.width;
             return {
                 x1: x,
-                y1: -8,
+                y1: -6,
                 x2: x,
                 y2: _this.dims.height,
                 color: color,
@@ -9039,7 +9039,7 @@ var BarHorizontal = (function (_super) {
     BarHorizontal = __decorate([
         core_1.Component({
             selector: 'bar-horizontal',
-            template: "\n<chart\n[legend]=\"legend\"\n[view]=\"[width, height]\"\n[colors]=\"colors\"\n[legendData]=\"yDomain\">\n<svg:g [attr.transform]=\"transform\" class=\"bar-chart chart\">\n<svg:g xAxis\n*ngIf=\"xAxis\"\n[xScale]=\"xScale\"\n[dims]=\"dims\"\n[showGridLines]=\"showGridLines\"\n[showLabel]=\"showXAxisLabel\"\n[labelText]=\"xAxisLabel\">\n</svg:g>\n\n<svg:g yAxis\n*ngIf=\"yAxis\"\n[yScale]=\"yScale\"\n[dims]=\"dims\"\n[tickFormatting]=\"yAxisTickFormatting()\"\n[showLabel]=\"showYAxisLabel\"\n[labelText]=\"yAxisLabel\">\n</svg:g>\n\n<svg:g seriesHorizontal\n[xScale]=\"xScale\"\n[yScale]=\"yScale\"\n[colors]=\"colors\"\n[series]=\"results\"\n[dims]=\"dims\"\n[gradient]=\"gradient\"\n(clickHandler)=\"click($event)\"\n/>\n\n<line *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\n[attr.x1]=\"line.x1\"\n[attr.y1]=\"line.y1\"\n[attr.x2]=\"line.x2\"\n[attr.y2]=\"line.y2 + 50 + i * 20\"\n[attr.stroke]=\"line.color\" stroke-dasharray=\"5, 5\" />\n\n<text x=\"0\" y=\"-10\" font-size=\"13\" font-weight=\"bold\" [attr.fill]=\"mainLabel.color\">{{ mainLabel.label }}</text>\n\n<text *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\nfont-weight=\"bold\" font-size=\"13\"\n[attr.x]=\"line.x2 - 150\" [attr.y]=\"line.y2 + 40 + i * 20\"\n[attr.fill]=\"line.color\"\n>\n{{ line.label }}\n</text>\n</svg:g>\n</chart>\n"
+            template: "\n<chart\n[legend]=\"legend\"\n[view]=\"[width, height]\"\n[colors]=\"colors\"\n[legendData]=\"yDomain\">\n<svg:g [attr.transform]=\"transform\" class=\"bar-chart chart\">\n<svg:g xAxis\n*ngIf=\"xAxis\"\n[xScale]=\"xScale\"\n[dims]=\"dims\"\n[showGridLines]=\"showGridLines\"\n[showLabel]=\"showXAxisLabel\"\n[labelText]=\"xAxisLabel\">\n</svg:g>\n\n<svg:g yAxis\n*ngIf=\"yAxis\"\n[yScale]=\"yScale\"\n[dims]=\"dims\"\n[tickFormatting]=\"yAxisTickFormatting()\"\n[showLabel]=\"showYAxisLabel\"\n[labelText]=\"yAxisLabel\">\n</svg:g>\n\n<svg:g seriesHorizontal\n[xScale]=\"xScale\"\n[yScale]=\"yScale\"\n[colors]=\"colors\"\n[series]=\"results\"\n[dims]=\"dims\"\n[gradient]=\"gradient\"\n(clickHandler)=\"click($event)\"\n/>\n\n<line *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\n[attr.x1]=\"line.x1\"\n[attr.y1]=\"line.y1\"\n[attr.x2]=\"line.x2\"\n[attr.y2]=\"line.y2 + 50 + i * 20\"\n[attr.stroke]=\"line.color\" stroke-dasharray=\"5, 5\" />\n\n<text x=\"0\" y=\"-8\" font-size=\"13\" font-weight=\"bold\" [attr.fill]=\"mainLabel.color\">{{ mainLabel.label }}</text>\n\n<text *ngFor=\"let line of lines; let i=index; trackBy:trackBy\"\nfont-weight=\"bold\" font-size=\"13\"\n[attr.x]=\"line.x2 - 150\" [attr.y]=\"line.y2 + 40 + i * 20\"\n[attr.fill]=\"line.color\"\n>\n{{ line.label }}\n</text>\n</svg:g>\n</chart>\n"
         }), 
         __metadata('design:paramtypes', [core_1.ElementRef, core_1.NgZone])
     ], BarHorizontal);

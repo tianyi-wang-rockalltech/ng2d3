@@ -166,7 +166,7 @@ export class BarHorizontalStacked extends BaseChart implements  OnChanges, OnDes
         {
           label: this.mainLabel[0].label,
           color: this.mainLabel[0].color,
-          x: 0, y: -10,
+          x: 0, y: -8,
           anchor: 'start'
         }
       );
@@ -175,7 +175,7 @@ export class BarHorizontalStacked extends BaseChart implements  OnChanges, OnDes
           {
             label: this.mainLabel[1].label,
             color: this.mainLabel[1].color,
-            x: this.dims.width - 5, y: -10,
+            x: this.dims.width - 5, y: -8,
             anchor: 'end'
           }
         );
@@ -192,7 +192,7 @@ export class BarHorizontalStacked extends BaseChart implements  OnChanges, OnDes
       let x = (val / this.maxVal) * this.dims.width;
       return {
         x1: x,
-        y1: -8,
+        y1: -6,
         x2: x,
         y2: this.dims.height,
         color: color,
