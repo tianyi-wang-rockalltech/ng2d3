@@ -63,8 +63,9 @@ import d3 from '../d3';
 
 <text *ngFor="let line of lines; let i=index; trackBy:trackBy"
 font-weight="bold" font-size="13"
-[attr.x]="line.x2 - 150" [attr.y]="line.y2 + 40 + i * 20"
+[attr.x]="line.x2 - 5" [attr.y]="line.y2 + 50 + i * 20"
 [attr.fill]="line.color"
+text-anchor="end"
 >
 {{ line.label }}
 </text>
